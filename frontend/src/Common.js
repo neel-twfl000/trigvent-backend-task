@@ -1,6 +1,6 @@
 
 export const API_URL = 'http://127.0.0.1:8000/api/'
-export const DATA_LIMIT = 5
+export const DATA_LIMIT = 10
 
 export function getUser(){
     const user = JSON.parse(localStorage.getItem("user"))

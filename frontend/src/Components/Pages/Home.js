@@ -7,13 +7,6 @@ import Update from './Forms/Update'
 import AddData from './Forms/AddData'
 import { toast } from 'react-toastify'
 
-
-
-
-
-
-
-
 const Home = () => {
   const q = new URLSearchParams(document.location.search)
 
@@ -161,7 +154,7 @@ const Home = () => {
 
                           <div className="d-flex mt-4 flex-wrap">
                             <p className="text-muted">
-                              Showing {offset} to {offset+DATA_LIMIT>state.count?
+                              Showing {offset+1} to {offset+DATA_LIMIT>state.count?
                               state.count
                               :
                               offset+DATA_LIMIT} data in Total {state.count} data

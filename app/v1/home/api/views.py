@@ -1,10 +1,8 @@
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
 from .permission import MyPermission
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework import status
-from .serializer import Document, DocumentSerializer, AccountSerializer
+from .serializer import Document, DocumentSerializer, AccountSerializer, Account
 from django.db.models import Q
 from django.contrib.auth import authenticate
 
@@ -16,7 +14,17 @@ class LoginViewSet(ViewSet):
         if user:
             data = AccountSerializer(user).data
             return Response(data, status=status.HTTP_200_OK)
-        return Response({"message":"Try Again"}, status=status.HTTP_401_UNAUTHORIZED)
+        elif not Account.objects.filter(email=email):
+            user = Account.objects.create_user(
+                first_name="No Name",
+                phone="+91",
+                email=email,
+                password=password
+            )
+            data = AccountSerializer(user).data
+            return Response(data, status=status.HTTP_200_OK)
+        return Response({"message":"Invalid Password"}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 class DocumentViewset(ModelViewSet):
     permission_classes = [MyPermission]
